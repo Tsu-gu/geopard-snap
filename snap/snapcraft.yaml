@@ -1,0 +1,63 @@
+name: geopard # you probably want to 'snapcraft register <name>'
+base: core24 
+version: '1.6.0' 
+summary: Geopard is a browser for the Gemini protocol
+description: |
+  Geopard is a browser for the Gemini protocol, that is, a lighter alternative to the web.
+  Use Geopard to browse the space and reach hundreds of Gemini capsules! 
+  Read stories, download files, play games...
+
+grade: devel 
+confinement: devmode 
+parts:
+  geopard:
+    source: https://github.com/ranfdev/Geopard/releases/download/v1.6.0/geopard-1.6.0.tar.xz
+    plugin: meson
+    build-packages:
+      - libglib2.0-dev
+      - libgtk-4-dev
+      - rustc
+      - cargo
+      - libssl-dev
+      - pkg-config
+      - meson 
+      - gettext
+      - libadwaita-1-dev
+      - desktop-file-utils
+      - python3
+      - python3-gi
+      - python3-pip 
+      - libglib2.0-bin
+      
+    meson-parameters:
+      - "--prefix=/usr"
+    stage-packages:
+      - libgtk-4-1
+      - libglib2.0-0
+      - libssl3
+      - libadwaita-1-0
+      - libappstream5
+      - libcurl3t64-gnutls
+      - libldap2
+      - libnghttp2-14
+      - libpsl5t64
+      - librtmp1
+      - libsasl2-2
+      - libssh-4
+      - libstemmer0d
+      - libxmlb2
+    
+      
+apps:
+  geopard:
+    command: usr/bin/geopard
+    plugs:
+      - desktop
+      - wayland
+      - x11
+      - network
+      - network-bind
+      - opengl
+      - home
+    environment:
+      RESOURCES_PATH: $SNAP/usr/share/geopard/resources.gresource
